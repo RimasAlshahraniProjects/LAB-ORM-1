@@ -1,0 +1,59 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %} Home - ROAM Travel Blog {% endblock %}
+
+{% block content %}
+<main>
+    <section id="home">
+        <div class="bg-img">
+            <img src="{% static 'imges\home-img\home-bg1.jpeg' %}" alt="">
+        </div>
+    </section>
+
+    <section id="explore">
+    <div class="explore__header">
+        <div class="explore__text">
+            <h1 class="explore__title">Latest Posts</h1>
+            <p class="explore__description">Welcome to Blogger, explore the latest stories and thoughts.</p>
+        </div>
+        <div class="explore__action">
+            <a href="{% url 'main:create_post_view' %}" class="btn-create">+ Write a New Post</a>
+        </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="posts-grid">
+        {% for post in posts %}
+            <article class="post-card">
+                <div class="post-card__content">
+                    <header class="post-card__header">
+                        <h2 class="post-card__title">{{ post.title }}</h2>
+                        <span class="post-card__status">
+                            {% if post.is_published %}Published{% else %}Draft{% endif %}
+                        </span>
+                    </header>
+                    
+                    <time class="post-card__date">{{ post.published_at|date:"M d, Y" }}</time>
+                    
+                    <p class="post-card__excerpt">{{ post.content }}</p>
+                </div>
+                <footer class="post-card__footer">
+                    <a href="#" class="btn-read-more">Read More</a>
+                </footer>
+            </article>
+        {% empty %}
+            <div class="no-posts">
+                <h3>No Posts Yet!</h3>
+                <p>Be the first to share your thoughts on the blog.</p>
+                <a href="{% url 'main:create_post_view' %}" class="btn-create">Add First Post</a>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+</main>
+
+
+  
+{% endblock %}
