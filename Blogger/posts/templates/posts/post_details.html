@@ -1,0 +1,36 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %} Create New Post | ROAM {% endblock %}
+
+{% block content %}
+<main class="post-details">
+    <article>
+        <header>
+            <h1>{{ post.title }}</h1>
+            <div class="meta-info">
+                <time>{{ post.published_at|date:"M d, Y" }}</time>
+                <span class="status-badge">{% if post.is_published %}Published{% else %}Draft{% endif %}</span>
+            </div>
+        </header>
+
+        {% if post.poster %}
+        <figure class="featured-image">
+            <img src="{{ post.poster.url }}" alt="{{ post.title }}">
+        </figure>
+        {% endif %}
+
+       <div class="post-actions">
+           <a href="{% url 'posts:post_update_view' post.id %}" class="btn-edit">Edit Post</a>
+           <a href="{% url 'posts:post_delete_view' post.id %}" class="btn-delete" onclick="return confirm('Are you sure?')">Delete Post</a>
+        </div>
+
+        <section class="content-area">
+            {{ post.content|linebreaks }}
+        </section>
+
+        <footer>
+            <a href="{% url 'main:home_view' %}" class="back-btn">Back to Stories</a>
+        </footer>
+    </article>
+</main>
+{% endblock %}

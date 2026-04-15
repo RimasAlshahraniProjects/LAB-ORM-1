@@ -10,13 +10,21 @@
             <p>Share your latest journey with the world.</p>
         </header>
 
-        <form action="{% url 'main:create_post_view' %}" method="POST" class="post-form">
+        <form action="{% url 'posts:create_post_view' %}" method="POST" enctype="multipart/form-data" class="post-form">
             {% csrf_token %}
+
             
             <div class="input-group">
                 <label for="title">Post Title</label>
                 <input type="text" name="title" id="title" placeholder="Enter a catchy title" required>
             </div>
+
+            <div class="input-group">
+                <label for="poster">Cover Image</label>
+                <input type="file" name="poster" id="poster" accept="image/*">
+                <small class="helper-text">Optional: Choose a high-quality visual for your post.</small>
+            </div>
+
 
             <div class="input-group">
                 <label for="content">Content</label>

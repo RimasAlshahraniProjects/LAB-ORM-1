@@ -7,7 +7,7 @@
 <main>
     <section id="home">
         <div class="bg-img">
-            <img src="{% static 'imges\home-img\home-bg1.jpeg' %}" alt="">
+            <img src="{% static 'imges/home-img/home-bg1.jpeg' %}" alt="Travel Background">
         </div>
     </section>
 
@@ -18,7 +18,7 @@
             <p class="explore__description">Welcome to Blogger, explore the latest stories and thoughts.</p>
         </div>
         <div class="explore__action">
-            <a href="{% url 'main:create_post_view' %}" class="btn-create">+ Write a New Post</a>
+            <a href="{% url 'posts:create_post_view' %}" class="btn-create">+ Write a New Post</a>
         </div>
     </div>
 
@@ -29,7 +29,10 @@
             <article class="post-card">
                 <div class="post-card__content">
                     <header class="post-card__header">
-                        <h2 class="post-card__title">{{ post.title }}</h2>
+                        <img src="{{ post.poster.url }}" alt="Post Image">
+                        <a href="{% url 'posts:post_details_view' post.id %}" style="text-decoration: none;">
+    <h2 class="post-card__title">{{ post.title }}</h2>
+</a>
                         <span class="post-card__status">
                             {% if post.is_published %}Published{% else %}Draft{% endif %}
                         </span>
@@ -37,23 +40,20 @@
                     
                     <time class="post-card__date">{{ post.published_at|date:"M d, Y" }}</time>
                     
-                    <p class="post-card__excerpt">{{ post.content }}</p>
+                  
                 </div>
                 <footer class="post-card__footer">
-                    <a href="#" class="btn-read-more">Read More</a>
+                    <a href="{% url 'posts:post_details_view' post.id %}" class="btn-read-more">Read More</a>
                 </footer>
             </article>
         {% empty %}
             <div class="no-posts">
                 <h3>No Posts Yet!</h3>
                 <p>Be the first to share your thoughts on the blog.</p>
-                <a href="{% url 'main:create_post_view' %}" class="btn-create">Add First Post</a>
+                <a href="{% url 'posts:create_post_view' %}" class="btn-create">Add First Post</a>
             </div>
         {% endfor %}
     </div>
 </section>
 </main>
-
-
-  
 {% endblock %}
